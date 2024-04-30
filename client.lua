@@ -1,20 +1,5 @@
-local function SetData()
-    local name = GetPlayerName(PlayerId())
-    local id = GetPlayerServerId(PlayerId())
-    local textEntry = string.format('~b~[~w~vMenu #1~b~] ~w~| ~b~Player ID~w~: %s ~w~| ~b~Player Name~w~: %s', id, name)
-    Citizen.InvokeNative(GetHashKey("ADD_TEXT_ENTRY"), 'FE_THDR_GTAO', textEntry)
-end
-
-Citizen.CreateThread(function()
-    SetData()
-    while true do
-        Citizen.Wait(1000) -- Reduce the frequency of setting HUD data to once per second
-        SetData()
-    end
-end)
-
 local HUD_ELEMENTS = {
-    HUD = 0, -- Simplify the HUD elements table
+    HUD = 0, 
     HUD_WANTED_STARS = 1,
     HUD_WEAPON_ICON = 2,
     HUD_CASH = 3,
@@ -40,15 +25,30 @@ local HUD_ELEMENTS = {
     MAX_SCRIPTED_HUD_COMPONENTS = 141
 }
 
+local function SetData()
+    local name = GetPlayerName(PlayerId())
+    local id = GetPlayerServerId(PlayerId())
+    local textEntry = string.format('~b~[~w~vMenu #1~b~] ~w~| ~b~Player ID~w~: %s ~w~| ~b~Player Name~w~: %s', id, name)
+    Citizen.InvokeNative(GetHashKey("ADD_TEXT_ENTRY"), 'FE_THDR_GTAO', textEntry)
+end
+
+Citizen.CreateThread(function()
+    SetData()
+    while true do
+        Citizen.Wait(1000) 
+        SetData()
+    end
+end)
+
 Citizen.CreateThread(function()
     while true do
         Citizen.Wait(0)
-        for _, val in pairs(HUD_ELEMENTS) do -- Simplify loop since we don't use the keys
-            if val ~= nil and type(val) == "number" then -- Check if value is a valid HUD component ID
+        for _, val in pairs(HUD_ELEMENTS) do 
+            if val ~= nil and type(val) == "number" then 
                 if val == HUD_ELEMENTS.HUD or val == HUD_ELEMENTS.HUD_HELP_TEXT or val == HUD_ELEMENTS.HUD_FLOATING_HELP_TEXT_1 or val == HUD_ELEMENTS.HUD_FLOATING_HELP_TEXT_2 or val == HUD_ELEMENTS.HUD_SUBTITLE_TEXT or val == HUD_ELEMENTS.HUD_RADIO_STATIONS or val == HUD_ELEMENTS.HUD_SAVING_GAME or val == HUD_ELEMENTS.HUD_GAME_STREAM or val == HUD_ELEMENTS.HUD_WEAPON_WHEEL or val == HUD_ELEMENTS.HUD_WEAPON_WHEEL_STATS then
-                    ShowHudComponentThisFrame(val) -- Show these HUD elements
+                    ShowHudComponentThisFrame(val)
                 else
-                    HideHudComponentThisFrame(val) -- Hide others
+                    HideHudComponentThisFrame(val) 
                 end
             end
         end
