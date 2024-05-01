@@ -1,5 +1,5 @@
 fx_version 'adamant'
-author 'CodyDaniel1'
+author 'AtlasDevLabs'
 description 'Pause Menu + HUD Cleanup'
 game { 'gta5' }
 version '1.0.0'
