@@ -4,7 +4,3 @@
 
 # Pause Menu
 - Custom Text in Pause Menu where FiveM used to be
-
-# TO-DO
-- Make Custom Pause Menu Text Easiy To Configure
-- Optimize / Make code more understandable.
